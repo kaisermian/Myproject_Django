@@ -1,0 +1,45 @@
+{% extends "image_classification/base.html" %}
+{% load static %}
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'image_classification/css/style.css' %}">
+{% endblock %}
+{% block page %}
+    <title>Image Classification</title>
+{% endblock %}
+{% block content %}
+    <div class="container py-5">
+        <header class="text-white text-center">
+            <h1 class="display-4">Image Classification (ImageNet)</h1>
+            <p class="lead mb-0">Classify any image right here, right now! FROM 1000 CLASSES OF IMAGENET!</p>
+            <p class="mb-5 font-weight-light">Web App by
+                <a href="mian.cabatingan@urios.edu.ph" class="text-white">
+                    <u>Kaiser Mian Cabatingan</u>
+                </a>
+            </p>
+            <img src="https://bootstrapious.com/i/snippets/sn-img-upload/image.svg" alt="" width="150" class="mb-4">
+        </header>
+        
+        <div class="row py-4">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+            <div class="col-lg-6 mx-auto">
+                
+                <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">
+                        <input id="upload" name="data" accept=".jpg, .jpeg, .png" type="file" class="form-control border-0">
+                        <label id="upload-label" for="upload" class="font-weight-light text-muted">Choose file</label>
+                        <div class="input-group-append">
+                            <button  class="btn btn-light m-0 rounded-pill px-4"><i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted ps-2">Upload file</small></button>
+                        </div>
+                </div>
+           
+                <p class="font-italic text-white text-center">The image uploaded will be rendered inside the box below.</p>
+                <div class="image-area mt-4"><img id="imageResult" src="{{ file_url }}" alt="" class="img-fluid rounded shadow-sm mx-auto d-block"></div>
+                
+                {% if predictions %}
+                <p class="mt-2 font-italic text-white text-center"><b>Prediction: {{ predictions }}</b> ({{ probability }})</p>
+                {% endif %}
+            </div>
+        </form>
+        </div>
+    </div>
+{% endblock %}
